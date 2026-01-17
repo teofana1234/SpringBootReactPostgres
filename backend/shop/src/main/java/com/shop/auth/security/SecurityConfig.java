@@ -41,6 +41,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/api-docs/**", "/actuator/**", "/webjars/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
 
                         /* ---- CUSTOMER – doar citire ---- */
                         // Folosim hasAnyAuthority pentru a potrivi exact "CUSTOMER" sau "ADMIN" din JWT

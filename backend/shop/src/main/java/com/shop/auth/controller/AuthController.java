@@ -4,7 +4,9 @@ import com.shop.auth.dto.LoginRequest;
 import com.shop.auth.dto.JwtResponse;
 import com.shop.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.shop.auth.dto.RegisterRequest;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -17,4 +19,11 @@ public class AuthController {
     public JwtResponse login(@RequestBody LoginRequest dto) {
         return authService.login(dto);
     }
+
+
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody RegisterRequest req) {
+        return authService.register(req);
+    }
+
 }
