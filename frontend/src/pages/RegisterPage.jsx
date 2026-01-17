@@ -40,15 +40,7 @@ export default function RegisterPage() {
           onChange={(e) => setUsername(e.target.value)}
           required
         />
-
-        <input
-          className="w-full mb-4 px-3 py-2 border rounded"
-          placeholder="Email (optional)"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-
+        
         <input
           className="w-full mb-6 px-3 py-2 border rounded"
           type="password"
