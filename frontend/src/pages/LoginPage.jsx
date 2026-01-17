@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
+import { Link } from "react-router-dom";
+
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
@@ -58,6 +60,12 @@ const { data } = await api.post('/auth/login', {
         <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
           Sign in
         </button>
+        <p className="text-center text-sm mt-4">
+           Nu ai cont?{" "}
+          <Link to="/register" className="text-blue-600 hover:underline">
+           Register
+          </Link>
+        </p>
       </form>
     </div>
   );

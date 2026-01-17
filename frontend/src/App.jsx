@@ -9,6 +9,7 @@ import Layout from './components/Layout'; // Importă Layout-ul
 import AdminChatPage from './pages/AdminChatPage';
 import { CartProvider } from './contexts/CartContext'; // <--- Import
 import  CartPage  from './pages/CartPage';
+import RegisterPage from "./pages/RegisterPage";
 
 // Modificăm ProtectedPage să folosească Layout
 function ProtectedPage({ page, allowed = [] }) {
@@ -35,6 +36,7 @@ export default function App() {
         <CartProvider>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
             {/* Rute protejate cu Meniu */}
             <Route path="/" element={<ProtectedPage page={<ProductsPage />} />} />
             <Route path="/admin" element={<ProtectedPage page={<AdminDashboard />} allowed={['ADMIN']} />} />
