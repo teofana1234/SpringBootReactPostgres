@@ -46,7 +46,7 @@ public class AuthService {
 
     public JwtResponse register(RegisterRequest dto) {
 
-        String username = dto.username();
+        String username = dto.username() == null ? null : dto.username().trim();
         String password = dto.password();
 
         if (username == null || username.isBlank() || password == null || password.isBlank()) {
@@ -61,7 +61,6 @@ public class AuthService {
         newUser.setUsername(username);
         newUser.setPassword(passwordEncoder.encode(password));
         newUser.setRole(Role.CUSTOMER);
-
         userRepository.save(newUser);
 
         Authentication auth = authManager.authenticate(
@@ -70,7 +69,7 @@ public class AuthService {
 
         UserDetails user = (UserDetails) auth.getPrincipal();
         String role = user.getAuthorities().iterator().next().getAuthority();
-
+        role = role.replace("ROLE_", ""); // ca sa fie "CUSTOMER"/"ADMIN" fix ca în config
 
         String token = jwtUtils.generateToken(user.getUsername(), role);
 
