@@ -44,27 +44,39 @@ public class AuthService {
         return new JwtResponse(token, role);
     }
 
-    public ResponseEntity<?> register(RegisterRequest dto) {
+    public JwtResponse register(RegisterRequest dto) {
 
-        String username = dto.username() == null ? "" : dto.username().trim();
+        String username = dto.username();
         String password = dto.password();
 
-        if (username.isBlank() || password == null || password.isBlank()) {
-            return ResponseEntity.badRequest().body("Username sau parola invalide");
+        if (username == null || username.isBlank() || password == null || password.isBlank()) {
+            throw new IllegalArgumentException("Username sau parola invalide");
         }
 
         if (userRepository.existsByUsername(username)) {
-            return ResponseEntity.status(409).body("Username deja există");
+            throw new IllegalStateException("Username deja există");
         }
 
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setRole(Role.CUSTOMER); // sau Role.USER dacă ai enum
+        User newUser = new User();
+        newUser.setUsername(username);
+        newUser.setPassword(passwordEncoder.encode(password));
+        newUser.setRole(Role.CUSTOMER);
 
-        userRepository.save(user);
+        userRepository.save(newUser);
 
-        return ResponseEntity.ok("User înregistrat cu succes");
+        Authentication auth = authManager.authenticate(
+                new UsernamePasswordAuthenticationToken(username, password)
+        );
+
+        UserDetails user = (UserDetails) auth.getPrincipal();
+        String role = user.getAuthorities().iterator().next().getAuthority();
+
+
+        String token = jwtUtils.generateToken(user.getUsername(), role);
+
+        return new JwtResponse(token, role);
     }
+
+
 
 }
