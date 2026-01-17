@@ -12,7 +12,10 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-        const { data } = await api.post('/auth/login', { username, password });
+const { data } = await api.post('/auth/login', {
+  username: username.trim(),
+  password: password
+});
         
         // Presupunem că backend-ul returnează: { token: "...", role: "...", username: "...", id: 1 }
         // Dacă backend-ul nu trimite ID și Username, va trebui să decodăm token-ul (JWT), 
