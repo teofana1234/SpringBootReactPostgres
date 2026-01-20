@@ -31,16 +31,15 @@ export const AuthProvider = ({ children }) => {
   };
 
 
-    const register = async (username, email, password) => {
+    const register = async (username, password) => {
     // IMPORTANT: aici pui endpoint-ul tău de backend
     // Dacă în backend ai /api/auth/register, aici folosești /api/auth/register
     // (pentru că axios global nu are baseURL ca instanța "api")
     const { data } = await axios.post(
-      "https://springbootreactpostgres.onrender.com/api/auth/register",
+      "http://localhost:8080/api/auth/register",
       {
-        username: username.trim(),
-        email: email?.trim() ? email.trim() : null,
-        password,
+        username: username,
+        password: password,
       }
     );
 

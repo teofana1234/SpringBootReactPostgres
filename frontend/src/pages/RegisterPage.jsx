@@ -7,7 +7,6 @@ export default function RegisterPage() {
   const { register } = useAuth();
 
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState("");
@@ -19,7 +18,7 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      await register(username, email, password);
+      await register(username, password);
       navigate("/"); // sau "/products"
     } catch (err) {
       setError(err.response?.data || err.message || "Register eșuat");
